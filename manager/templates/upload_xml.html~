@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Upload</title>
+</head>
+<body>
+<script language="javascript">
+function insertTitle(tValue){
+    document.getElementById("filename").value = tValue;
+}
+</script>
+
+    <form enctype="multipart/form-data" action="/upload_xml/" method="post">
+			<input type="hidden" name="filename" id="filename" />
+			<p><input type="text" name="name" />Name
+			<p><input type="text" name="description" />Description
+        <p><input type="file" name="file" onChange="if(this.value)insertTitle(this.value);" />File
+        <input type="submit" value="Upload" />
+    </form>
+</body>
+</html>

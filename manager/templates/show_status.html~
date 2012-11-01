@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>Create Project</title>
+</head>
+<body>
+<script language="javascript">
+
+</script>
+	<table>
+		<tr><td>status</td><td>ip</td><td>projectid</td><td>machineid</td><td>countnow</td><td>totalline</td><td>lastmodify</td></tr>
+		{% for machine in machines %}
+			<tr><td>{{machine.status}}</td><td>{{machine.ip}}</td><td>{{machine.projectid}}</td>
+					<td>{{machine.macid}}</td><td>{{machine.countnow}}</td><td>{{machine.totalline}}</td><td>{{machine.lastmodify}}</td>
+				<!--<td><a href = "/start/?pid={{project.id}}" > START </a></td>-->
+			</tr>
+			{% endfor %}
+			
+	</table>
+    <!--<form enctype="multipart/form-data" action="/create_project/" method="post">
+			<p><input type="text" name="name" />Name
+			<p><input type="text" name="description" />Description
+			<p><input type="text" name="number" />Number(max:{{max}})
+			<p><select name="xmls">
+				{% for xml in xmls %}
+        			 <option value={{xml.id}}>{{xml.description}}</option>
+    			{% endfor %}
+			</select>XML
+        <input type="submit" value="Create" />
+    </form>-->
+</body>
+</html>
