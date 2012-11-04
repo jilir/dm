@@ -152,7 +152,13 @@ def statusback(request):
 		cid = int(request.GET['cid'])
 		tid = int(request.GET['tid'])
 		timest = int(time.time())
-		machine = machines.objects.get(projectid=pid, macid=mid)
+		try:
+			machine = machines.objects.get(projectid=pid, macid=mid)
+		except machines.DoesNotExist:
+			#for the dead machines
+			machine = machines(ip=ip, macid=-1, totalcount=-1, countnow=-1, projectid=-1, status='free', lastback=timest, lastmodify=timest)
+			machine.save()
+			return HttpResponse('stop')
 		count = machine.countnow
 		if(count != cid):
 			machine.lastmodify = timest
@@ -265,3 +271,45 @@ def show_status(request):
 
 def show_hi(request):
 	return HttpResponse('hi')
+
+
+
+def vertify_status(request):
+	timest = int(time.time())
+	machine = machines.objects.all()
+	#machine
+	for mac in machine:
+		try:
+			log = logs.objects.get(projectid = mac.projectid, macid = mac.macid)
+			mac.delete()
+			continue
+		except machines.DoesNotExist:
+			#nothing
+		#bad
+		if(timest - mac.lastback > 120):
+			crash = crashs(ip = mac.ip, projectid = mac.projectid, macid = mac.macid, countnow = mac.countnow,status='unhandled')
+			crash.save;
+			mac.delete()
+			#think
+		elif(timest - mac.lastchange > 90 and timest - mac.lastchange < 180):
+			mac.status = 'LTNM'
+		elif(timest - mac.lastchange > 180):
+			crash = crashs(ip = mac.ip, projectid = mac.projectid, macid = mac.macid, countnow = mac.countnow,status='unhandled')
+			crash.save;
+			mac.delete()
+
+def handle_crash(id):
+	crash = crashs.objects.get(id=id)
+	mutex.acquire()
+	try:
+		try:
+			freemachine = machines.objects.filter(status='free').order_by('ip')[0:1]
+			freemachine.macid = crash.macid
+			freemachine.projectid = crash.projectid
+			freemachine.countnow = crash.countnow
+			freemachine.countnow = 'inuse'
+		except:
+			print 'handle_crash error'
+
+	finally:	
+		mutex.release()

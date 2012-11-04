@@ -38,6 +38,7 @@ class crashs(models.Model):
 	macid = models.IntegerField()
 	countnow = models.IntegerField()
 	status = models.CharField(max_length = 16)#handled or not
+	#islogback
 #project:{id(pkey), name, description, xmlid, totalmachines,allocindex ,status[deleted, stop, over, running]}
 
 
