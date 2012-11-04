@@ -255,7 +255,11 @@ def find_free_machine(request):
 def show_status(request):
 	if request.method == 'GET':
 		machine = machines.objects.all()
-		return render_to_response('show_status.html', {'machines':machine})
+		xmls = xml.objects.all()
+		project = projects.objects.all()
+		log = logs.objects.all()
+		crash = crashs.objects.all()
+		return render_to_response('show_status.html', {'machines':machine,'xmls':xmls, 'projects':project, 'logs':log,'crashs':crash})
 	else:
 		return HttpResponse('error')
 
