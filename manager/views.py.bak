@@ -265,10 +265,3 @@ def show_status(request):
 
 def show_hi(request):
 	return HttpResponse('hi')
-
-
-
-def vertify_status(request):
-	timest = int(time.time())
-	
-
