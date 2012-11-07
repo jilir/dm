@@ -172,7 +172,7 @@ def beat_th():
 
 					#kill peach and goto gettask fuck the path!!!
 					##need to add
-		time.sleep(10)
+		time.sleep(5)
 
 '''
 my_address = ('', 17878)

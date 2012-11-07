@@ -4,9 +4,12 @@
 </head>
 <body>
 <script language="javascript">
-
+<style type="text/css">
+	<!--  -->
+</style>
 </script>
 	<table>
+	<tr>machines:</tr>
 		<tr><td>status</td><td>ip</td><td>projectid</td><td>machineid</td><td>countnow</td><td>totalline</td><td>lastmodify</td></tr>
 		{% for machine in machines %}
 			<tr><td>{{machine.status}}</td><td>{{machine.ip}}</td><td>{{machine.projectid}}</td>
@@ -14,7 +17,11 @@
 				<!--<td><a href = "/start/?pid={{project.id}}" > START </a></td>-->
 			</tr>
 			{% endfor %}
-			
+	<tr>crashs:</tr>
+		<tr><td>id</td><td>ip</td><td>projectid</td><td>machineid</td><td>countnow</td><td>status</td></tr>
+		{% for crash in crashs %}
+		<tr><td>{{crash.id}}</td><td>{{crash.ip}}</td><td>{{crash.projectid}}</td><td>{{crash.macid}}</td><td>{{crash.countnow}}</td><td>{{crash.status}}</td></tr>
+		{% endfor %}
 	</table>
     <!--<form enctype="multipart/form-data" action="/create_project/" method="post">
 			<p><input type="text" name="name" />Name

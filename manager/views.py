@@ -7,6 +7,7 @@ from projects.models import xml
 from projects.models import projects
 from projects.models import machines
 from projects.models import logs
+from projects.models import crashs
 import datetime
 import os
 import time
@@ -277,7 +278,7 @@ def show_hi(request):
 		fp = open(abpath+'/client/client.py', 'r')
 		py = fp.read()
 		fp.close()
-		return HttpResponse(fp)
+		return HttpResponse(py)
 	else:
 		return HttpResponse('hi')
 
@@ -292,19 +293,21 @@ def vertify_status():
 			log = logs.objects.get(projectid = mac.projectid, macid = mac.macid)
 			mac.delete()
 			continue
-		except machines.DoesNotExist:
+		except logs.DoesNotExist:
 			#nothing
+			print 'r'
 		#bad
-		if(timest - mac.lastback > 120):
+		if(timest - mac.lastback) > 120:
 			crash = crashs(ip = mac.ip, projectid = mac.projectid, macid = mac.macid, countnow = mac.countnow,status='unhandled')
-			crash.save;
+			crash.save();
 			mac.delete()
 			#think
-		elif(timest - mac.lastchange > 90 and timest - mac.lastchange < 180):
+		elif(timest - mac.lastmodify > 90 and timest - mac.lastmodify < 180):
 			mac.status = 'LTNM'
-		elif(timest - mac.lastchange > 180):
+			mac.save()
+		elif(timest - mac.lastmodify > 180):
 			crash = crashs(ip = mac.ip, projectid = mac.projectid, macid = mac.macid, countnow = mac.countnow,status='unhandled')
-			crash.save;
+			crash.save();
 			mac.delete()
 
 def handle_crash(id):
@@ -317,6 +320,7 @@ def handle_crash(id):
 			freemachine.projectid = crash.projectid
 			freemachine.countnow = crash.countnow
 			freemachine.status = 'inuse'
+			freemachine.save()
 		except:
 			print 'handle_crash error'
 

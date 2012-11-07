@@ -1,11 +1,11 @@
 # Django settings for manager project.
 import os
-from manager.views import deamon_init
-import threading
+#from manager.views import deamon_init
+#import threading
 
 
-dmth = threading.Thread(target = deamon_init)
-dmth.start()
+#dmth = threading.Thread(target = deamon_init)
+#dmth.start()
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
