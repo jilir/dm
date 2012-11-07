@@ -259,6 +259,7 @@ def find_free_machine(request):
 
 
 def show_status(request):
+	vertify_status()
 	if request.method == 'GET':
 		machine = machines.objects.all()
 		xmls = xml.objects.all()
@@ -270,11 +271,19 @@ def show_status(request):
 		return HttpResponse('error')
 
 def show_hi(request):
-	return HttpResponse('hi')
+	abpath = os.path.dirname(__file__)
+	a = True
+	if a == True:
+		fp = open(abpath+'/client/client.py', 'r')
+		py = fp.read()
+		fp.close()
+		return HttpResponse(fp)
+	else:
+		return HttpResponse('hi')
 
 
 
-def vertify_status(request):
+def vertify_status():
 	timest = int(time.time())
 	machine = machines.objects.all()
 	#machine
