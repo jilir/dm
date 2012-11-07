@@ -14,8 +14,8 @@ import subprocess
 
 back_host = 'http://10.0.16.1:8000/'
 pythonpath = 'C:\\Python27\\python2.7.exe'
-peachpath = 'C:\\peach-svn\\peach.py'
-peachdir = 'C:\\peach-svn\\'
+peachpath = 'C:\\peach\\peach.py'
+peachdir = 'C:\\peach\\'
 curpath = os.path.dirname(__file__)
 mymid = -1
 mypid = -1
