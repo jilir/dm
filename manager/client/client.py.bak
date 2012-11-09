@@ -79,9 +79,15 @@ def get_count():
 	return a, b
 
 def http_back(url):
-	request = urllib2.urlopen(url)
-	a=request.read()
-	print a
+	a = 'error'
+	for i in range(0,5):
+		try:
+			request = urllib2.urlopen(url)
+			a=request.read()
+			break
+		except:
+			print 'try again...'+str(i)
+			time.sleep(1)
 	return a
 
 def get_xml(pid):
@@ -172,7 +178,7 @@ def beat_th():
 
 					#kill peach and goto gettask fuck the path!!!
 					##need to add
-		time.sleep(5)
+		time.sleep(10)
 
 '''
 my_address = ('', 17878)

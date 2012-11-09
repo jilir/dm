@@ -79,9 +79,15 @@ def get_count():
 	return a, b
 
 def http_back(url):
-	request = urllib2.urlopen(url)
-	a=request.read()
-	print a
+	a = 'error'
+	for i in range(0,5):
+		try:
+			request = urllib2.urlopen(url)
+			a=request.read()
+			break
+		except:
+			print 'try again...'+str(i)
+			time.sleep(0.5)
 	return a
 
 def get_xml(pid):
